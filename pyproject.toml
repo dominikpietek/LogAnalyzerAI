@@ -8,7 +8,9 @@ version = "0.2.0"
 description = "Lokalny agent AI analizujący logi .NET i proponujący poprawki w kodzie"
 readme = "README.md"
 requires-python = ">=3.10.11"
-dependencies = []
+dependencies = [
+    "pydantic>=2",
+]
 
 [project.optional-dependencies]
 dev = [
@@ -26,7 +28,7 @@ testpaths = ["tests"]
 addopts = "-ra"
 
 [tool.ruff]
-line-length = 100
+line-length = 150
 target-version = "py312"
 
 [tool.ruff.lint]
@@ -36,3 +38,4 @@ select = ["E", "F", "I", "B", "UP"]
 python_version = "3.12"
 strict = true
 files = ["src", "tests"]
+plugins = ["pydantic.mypy"]
