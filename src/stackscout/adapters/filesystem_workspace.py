@@ -84,6 +84,16 @@ class FileSystemWorkspace:
         for file in files:
             if truncated:
                 break
+
+            with open(self.root / file, encoding="utf-8-sig", errors="replace") as f:
+                text = f.read()
+                text_lower = text.lower()
+                if regex:
+                    if not pattern.search(text_lower):
+                        continue
+                elif query not in text_lower:
+                    continue
+
             with open(self.root / file, encoding="utf-8-sig", errors="replace") as f:
                 for line_no, line in enumerate(f, start=1):
                     line_lower = line.lower()
