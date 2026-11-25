@@ -1,7 +1,8 @@
-from stackscout.domain.chat import ChatMessage, LlmResponse
 from collections.abc import Sequence
-from typing import Any
 from dataclasses import dataclass
+from typing import Any
+
+from stackscout.domain.chat import ChatMessage, LlmResponse
 
 
 @dataclass(frozen=True)
@@ -14,10 +15,9 @@ class FakeCall:
 class FakeLlmClient:
     def __init__(self, responses: list[str]) -> None:
         self._responses = list(responses)
-        self.calls: list[FakeCall]
+        self.calls: list[FakeCall] = []
 
-    def complete(self, messages: Sequence[ChatMessage], *, 
-                     temperature: float = 0.0, json_schema: dict[str, Any] | None  = None) -> LlmResponse:
+    def complete(self, messages: Sequence[ChatMessage], *, temperature: float = 0.0, json_schema: dict[str, Any] | None = None) -> LlmResponse:
         self.calls.append(FakeCall(messages=tuple(messages), temperature=temperature, json_schema=json_schema))
         if len(self._responses) == 0:
             raise Exception("No responses")
